@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meri Anime List</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=Noto+Sans:wght@400;600&display=swap">
+<style>
+:root{--bg:#f6f3fb;--surface:#fff;--ink:#1d1633;--mute:#6d6585;--line:#e3ddf0;--accent:#e8325f;--accent-ink:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171227;--surface:#211a38;--ink:#f1ecff;--mute:#a79fc2;--line:#33294f;--accent:#ff5b86;--accent-ink:#1d1633;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171227;--surface:#211a38;--ink:#f1ecff;--mute:#a79fc2;--line:#33294f;--accent:#ff5b86;--accent-ink:#1d1633;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "Noto Sans",system-ui,sans-serif}
+main{max-width:640px;margin:0 auto;padding:20px 16px 48px}
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:14px}
+h1{font:800 28px/1.1 "Bricolage Grotesque",system-ui,sans-serif;margin:0}
+.total{font:800 64px/0.9 "Bricolage Grotesque",system-ui,sans-serif;color:var(--accent);text-align:right}
+.total small{display:block;font:600 13px/1.2 "Noto Sans",sans-serif;color:var(--mute);margin-top:4px;max-width:140px;overflow-wrap:anywhere}
+.tabs{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;display:flex;gap:4px;overflow-x:auto;padding:5px;margin:0 0 14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 20px -12px rgba(60,20,110,.45);scrollbar-width:none}
+.ind{position:absolute;top:5px;bottom:5px;left:0;border-radius:12px;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 65%,#ff9a3c));box-shadow:0 6px 16px -6px var(--accent);transition:transform .3s cubic-bezier(.3,.8,.3,1),width .3s cubic-bezier(.3,.8,.3,1);pointer-events:none}
+@media (prefers-reduced-motion:reduce){.ind{transition:none!important}}
+.tabs::-webkit-scrollbar{display:none}
+.tab{position:relative;z-index:1;flex:none;display:flex;align-items:center;gap:7px;background:transparent;color:var(--mute);padding:10px 14px;border-radius:12px;white-space:nowrap;transition:color .2s}
+.tab[aria-selected="true"]{color:var(--accent-ink)}
+.tab small{font-weight:700;font-size:12px;line-height:1.5;padding:0 8px;border-radius:999px;background:var(--bg);color:var(--mute);margin:0}
+.tab[aria-selected="true"] small{background:rgba(255,255,255,.28);color:var(--accent-ink)}
+.tab.plus{border:1px dashed var(--line);margin-left:2px}
+.row,form#add{display:flex;gap:8px;margin-bottom:10px}
+.wrap{flex-wrap:wrap}
+input[type=text],input[type=search],input[type=password],input[type=number]{flex:1;min-width:0;padding:12px 14px;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px}
+button{font:600 15px "Noto Sans",sans-serif;cursor:pointer;border:0;border-radius:10px;padding:12px 16px;background:var(--accent);color:var(--accent-ink)}
+button.ghost{background:transparent;color:var(--mute);padding:8px 10px;border:1px solid var(--line)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+ol{list-style:none;margin:0;padding:0}
+li{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 8px 8px 12px;margin-bottom:6px}
+.n{flex:none;width:48px;font:800 22px/1 "Bricolage Grotesque",sans-serif;color:var(--accent);text-align:left;background:none;border:0;padding:6px 0}
+.n:hover{text-decoration:underline}
+.num-in{flex:none;width:60px;padding:6px;font-size:16px}
+.t{flex:1;min-width:0;overflow-wrap:anywhere}
+.acts{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.empty{color:var(--mute);padding:16px 4px}
+#msg{color:var(--mute);padding:4px;min-height:28px;font-size:14px}
+#msg button{margin-left:8px;padding:4px 10px;font-size:14px}
+.ov{position:fixed;inset:0;background:rgba(10,6,24,.6);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;width:100%;max-width:340px}
+.box h2{font:800 20px/1.2 "Bricolage Grotesque",sans-serif;margin:0 0 8px}
+.box label{display:block;font-size:14px;color:var(--mute);margin:10px 0 4px}
+.pw{position:relative}
+.pw input{width:100%;padding-right:48px}
+.box input{width:100%}
+.eye{position:absolute;right:4px;top:50%;transform:translateY(-50%);padding:6px 8px;background:transparent;color:var(--mute);line-height:0}
+.eye svg{width:22px;height:22px}
+.err{color:var(--accent);font-size:14px;min-height:22px;margin-top:8px}
+.box .row{justify-content:flex-end;margin:4px 0 0}
+:root{--glow:rgba(232,50,95,.4)}
+@media (prefers-color-scheme:dark){:root{--glow:rgba(255,91,134,.55)}}
+.total span{text-shadow:0 0 18px var(--glow),0 0 40px var(--glow)}
+.n{text-shadow:0 0 10px var(--glow)}
+.tab[aria-selected="true"]{box-shadow:0 0 14px var(--glow),0 0 30px var(--glow)}
+.tab.plus:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 12px var(--glow)}
+button:not(.ghost):not(.tab):not(.eye):not(.n):hover{box-shadow:0 0 14px var(--glow),0 0 28px var(--glow)}
+button.ghost:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 10px var(--glow)}
+li{transition:box-shadow .2s,border-color .2s}
+li:hover,li:focus-within{border-color:var(--accent);box-shadow:0 0 14px var(--glow)}
+input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 12px var(--glow)}
+.box{box-shadow:0 0 36px var(--glow)}
+@keyframes pulse{0%,100%{text-shadow:0 0 14px var(--glow),0 0 30px var(--glow)}50%{text-shadow:0 0 26px var(--glow),0 0 54px var(--glow)}}
+@media (prefers-reduced-motion:no-preference){.total span{animation:pulse 3s ease-in-out infinite}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Meri anime list</h1>
+  <div class="total"><span id="count">0</span><small id="clab"></small></div>
+</header>
+<div class="tabs" id="tabs" role="tablist" aria-label="Section"></div>
+<form id="add"><input type="text" id="name" placeholder="Naam likho" autocomplete="off" aria-label="Naam"><button type="submit">Jodo</button></form>
+<div class="row"><input type="search" id="q" placeholder="Naam se khojo, number dikhega" aria-label="Khojo"></div>
+<div class="row wrap">
+  <button class="ghost" id="chpw" type="button">Password badlo</button>
+  <button class="ghost" id="deltab" type="button">Section hatao</button>
+</div>
+<div id="msg" role="status"></div>
+<ol id="list"></ol>
+<p class="empty" id="empty" hidden></p>
+</main>
+<script>
+var DEFAULT=["DAN DA DAN","One Punch Man","Goblin Slayer","My Unique Skill Makes Me OP Even at Level 1","The Daily Life of the Immortal King","Jujutsu Kaisen","Naruto","Blue Lock","Gantz","Death Note","Chainsmoker Cat","Re:ZERO Starting Life in Another World","An Adventurer’s Daily Grind at Age 29","Arifureta: From Commonplace to World’s Strongest","Horimiya","Oshi no Ko","Catch Me at the Ballpark!","Hanaori-san Still Wants to Fight in the Next Life","Yowayowa Sensei","More Than a Married Couple, But Not Lovers","Trapped in a Dating Sim: The World of Otome Games Is Tough for Mobs","The Red Ranger Becomes an Adventurer in Another World","The Shiunji Family Children","Bucchigiri?!","Grand Blue Dreaming","Wistoria: Wand and Sword","Konosuba: God’s Blessing on This Wonderful World!","A Couple of Cuckoos","Why Does Nobody Remember Me in This World","I Got a Cheat Skill in Another World and Became Unrivaled in the Real World, Too","I Was Reincarnated as the 7th Prince so I Can Take My Time Perfecting My Magical Ability","Fairy Tail","Tomo-chan Is a Girl!","An Archdemon’s Dilemma: How to Love Your Elf Bride","Mashle: Magic and Muscles","The Wrong Way to Use Healing Magic","Mushoku Tensei: Jobless Reincarnation","The Detective Is Already Dead","A Wild Last Boss Appeared!","A Gatherer’s Adventure in Isekai","Kamikatsu: Working for God in a Godless World","Makeine: Too Many Losing Heroines!","Watari-kun’s ****** Is About to Collapse","Demon Lord, Retry!","The Angel Next Door Spoils Me Rotten","Rent-a-Girlfriend","Alya Sometimes Hides Her Feelings in Russian","My Dress-Up Darling","Days with My Stepsister","The Ramparts of Ice","New Saga","Jack-of-All-Trades, Party of None","Frieren: Beyond Journey’s End","Blue Box","Reborn to Master the Blade: From Hero-King to Extraordinary Squire","My One-Hit Kill Sister","Heroines Run the Show","The Reincarnation of the Strongest Exorcist in Another World","Bartender: Glass of God","Clevatess","Hana-Kimi","I Became a Legend After My 10-Year-Long Last Stand","Miss Kuroitsu from the Monster Development Department","Attack on Titan","You Are Ms. Servant","The Rising of the Shield Hero","Amagami-san Chi no Enmusubi"];
+var KEY="animeListV3",PWK="animeListPw";
+var $=function(id){return document.getElementById(id)};
+var EYE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+var EYEOFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.9 17.9A10.9 10.9 0 0 1 12 20C5 20 1 12 1 12a18 18 0 0 1 5.1-5.9M9.9 4.2A9.1 9.1 0 0 1 12 4c7 0 11 8 11 8a18 18 0 0 1-2.2 3.2M1 1l22 22"/></svg>';
+var data=load(),fails=0,lockUntil=0;
+function names(a){return a.map(function(x){return{n:typeof x==="string"?x:String(x.n)}})}
+function fresh(){return{active:"series",tabs:[{id:"series",name:"Series",items:names(DEFAULT)},{id:"movies",name:"Movies",items:[]}]}}
+function load(){
+  try{var s=localStorage.getItem(KEY);if(s){var d=JSON.parse(s);if(d&&Array.isArray(d.tabs)&&d.tabs.length)return d}}catch(e){}
+  var f=fresh();
+  try{var o=localStorage.getItem("animeListV2")||localStorage.getItem("animeListV1");if(o){var a=JSON.parse(o);if(Array.isArray(a)&&a.length)f.tabs[0].items=names(a)}}catch(e){}
+  return f;
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}}
+function cur(){for(var i=0;i<data.tabs.length;i++)if(data.tabs[i].id===data.active)return data.tabs[i];data.active=data.tabs[0].id;return data.tabs[0]}
+function hp(p){var h=5381;for(var i=0;i<p.length;i++)h=((h<<5)+h+p.charCodeAt(i))|0;return "h"+h}
+function hp2(s){var h1=0xdeadbeef,h2=0x41c6ce57;for(var i=0,c;i<s.length;i++){c=s.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return "c"+(4294967296*(2097151&h2)+(h1>>>0)).toString(16)}
+function stored(){try{return localStorage.getItem(PWK)}catch(e){return null}}
+function setPw(p){try{localStorage.setItem(PWK,hp2(p))}catch(e){}}
+function pwOk(p){var s=stored();if(!s)return p==="1234";if(hp2(p)===s)return true;if(hp(p)===s||p===s){setPw(p);return true}return false}
+function say(t,undo){
+  var m=$("msg");m.textContent=t;
+  if(undo){var b=document.createElement("button");b.className="ghost";b.type="button";b.textContent="Wapas laao";
+    b.onclick=undo.fn;m.appendChild(b)}
+}
+function modal(title,fields,okText,cb,cancel){
+  var ov=document.createElement("div");ov.className="ov";
+  var box=document.createElement("div");box.className="box";box.setAttribute("role","dialog");box.setAttribute("aria-label",title);
+  var h=document.createElement("h2");h.textContent=title;box.appendChild(h);
+  var ins=fields.map(function(f,k){
+    var l=document.createElement("label");l.textContent=f.l;l.htmlFor="pf"+k;box.appendChild(l);
+    var i=document.createElement("input");i.id="pf"+k;i.autocomplete="off";i.maxLength=64;
+    if(f.t==="text"){i.type="text";box.appendChild(i);return i}
+    i.type="password";
+    var w=document.createElement("div");w.className="pw";
+    var e=document.createElement("button");e.type="button";e.className="eye";e.innerHTML=EYE;e.setAttribute("aria-label","Password dikhao");
+    e.onclick=function(){var show=i.type==="password";i.type=show?"text":"password";e.innerHTML=show?EYEOFF:EYE;e.setAttribute("aria-label",show?"Password chhupao":"Password dikhao");i.focus()};
+    w.appendChild(i);w.appendChild(e);box.appendChild(w);return i});
+  var err=document.createElement("div");err.className="err";err.setAttribute("role","alert");box.appendChild(err);
+  var row=document.createElement("div");row.className="row";
+  var c=document.createElement("button");c.className="ghost";c.type="button";c.textContent="Raho";
+  var ok=document.createElement("button");ok.type="button";ok.textContent=okText;
+  row.appendChild(c);row.appendChild(ok);box.appendChild(row);ov.appendChild(box);document.body.appendChild(ov);
+  function close(){if(ov.parentNode)document.body.removeChild(ov)}
+  function submit(){var e=cb(ins.map(function(i){return i.value}));if(e){err.textContent=e}else{close()}}
+  c.onclick=function(){close();if(cancel)cancel()};ok.onclick=submit;
+  box.onkeydown=function(e){if(e.key==="Enter"){e.preventDefault();submit()}if(e.key==="Escape"){close();if(cancel)cancel()}};
+  ins[0].focus();
+}
+function check(p){
+  var left=Math.ceil((lockUntil-Date.now())/1000);
+  if(left>0)return left+" second baad koshish karo.";
+  if(pwOk(p)){fails=0;return null}
+  fails++;
+  if(fails>=3){fails=0;lockUntil=Date.now()+30000;return "3 baar galat. 30 second ruko."}
+  return "Password galat hai. "+(3-fails)+" koshish baaki.";
+}
+function gate(action,cancel){
+  modal("Password daalo",[{l:"Password"}],"Aage badho",function(v){var e=check(v[0]);if(e)return e;action();return null},cancel);
+}
+function renderTabs(){
+  var t=$("tabs"),ind=t.querySelector(".ind"),first=!ind,act=null;if(!ind){ind=document.createElement("span");ind.className="ind";ind.setAttribute("aria-hidden","true");t.appendChild(ind)}Array.prototype.forEach.call(t.querySelectorAll(".tab"),function(x){t.removeChild(x)});
+  data.tabs.forEach(function(tb){
+    var b=document.createElement("button");b.type="button";b.className="tab";b.setAttribute("role","tab");b.setAttribute("aria-selected",tb.id===data.active?"true":"false");
+    b.appendChild(document.createTextNode((tb.id==="series"?"📺 ":tb.id==="movies"?"🎬 ":"✦ ")+tb.name));if(tb.id===data.active)act=b;
+    var s=document.createElement("small");s.textContent=tb.items.length;b.appendChild(s);
+    b.onclick=function(){data.active=tb.id;save();$("q").value="";say("");render()};
+    t.appendChild(b)});
+  var p=document.createElement("button");p.type="button";p.className="tab plus";p.textContent="+ Naya";p.setAttribute("aria-label","Naya section banao");
+  p.onclick=newTab;t.appendChild(p);
+  if(act){ind.style.width=act.offsetWidth+"px";ind.style.transform="translateX("+act.offsetLeft+"px)";if(first){ind.style.transition="none";requestAnimationFrame(function(){requestAnimationFrame(function(){ind.style.transition=""})})}try{t.scrollTo({left:Math.max(0,act.offsetLeft-24),behavior:"smooth"})}catch(e){}}
+}
+function render(){
+  var tb=cur(),L=tb.items,q=$("q").value.trim().toLowerCase(),ol=$("list");
+  ol.textContent="";var shown=0;
+  L.forEach(function(it,i){
+    if(q&&it.n.toLowerCase().indexOf(q)<0)return;
+    shown++;
+    var li=document.createElement("li");
+    var n=document.createElement("button");n.className="n";n.textContent=i+1;n.setAttribute("aria-label","Number "+(i+1)+", badalne ke liye dabao");
+    n.onclick=function(){editNum(li,n,i)};
+    var t=document.createElement("div");t.className="t";t.textContent=it.n;
+    var a=document.createElement("div");a.className="acts";
+    [["↑","Upar",function(){gate(function(){move(i,i-1)})}],["↓","Neeche",function(){gate(function(){move(i,i+1)})}],["✕","Hatao",function(){gate(function(){remove(i)})}]].forEach(function(x){
+      var b=document.createElement("button");b.className="ghost";b.textContent=x[0];b.setAttribute("aria-label",x[1]);b.onclick=x[2];a.appendChild(b)});
+    li.appendChild(n);li.appendChild(t);li.appendChild(a);ol.appendChild(li);
+  });
+  $("count").textContent=L.length;$("clab").textContent=tb.name+" mein";
+  var e=$("empty");e.hidden=shown>0;e.textContent=q?"Kuch nahi mila.":"Is section mein abhi kuch nahi. Upar naam likhkar jodo.";
+  $("deltab").textContent="“"+tb.name+"” section hatao";
+  renderTabs();
+}
+function editNum(li,btn,i){
+  var L=cur().items;
+  var inp=document.createElement("input");inp.type="number";inp.min=1;inp.max=L.length;inp.value=i+1;inp.className="num-in";inp.setAttribute("aria-label","Naya number");
+  li.replaceChild(inp,btn);inp.focus();inp.select();
+  var done=false;
+  function commit(){if(done)return;done=true;var v=parseInt(inp.value,10);
+    if(v>=1&&v<=L.length&&v-1!==i){gate(function(){move(i,v-1)},render)}else{render()}}
+  inp.onblur=commit;inp.onkeydown=function(e){if(e.key==="Enter")commit();if(e.key==="Escape"){done=true;render()}};
+}
+function move(from,to){
+  var L=cur().items;if(to<0||to>=L.length)return;
+  var x=L.splice(from,1)[0];L.splice(to,0,x);save();render();say("“"+x.n+"” ab number "+(to+1)+" par hai.");
+}
+function remove(i){var tb=cur(),x=tb.items.splice(i,1)[0];save();render();say("“"+x.n+"” hata diya. Ab total "+tb.items.length+" hai.",{fn:function(){tb.items.splice(Math.min(i,tb.items.length),0,x);save();render();say("“"+x.n+"” wapas number "+(i+1)+" par aa gaya.")}})}
+$("add").onsubmit=function(e){
+  e.preventDefault();var v=$("name").value.trim(),tb=cur();if(!v){say("Pehle naam likho.");return}
+  if(tb.items.some(function(x){return x.n.toLowerCase()===v.toLowerCase()})){say("Yeh pehle se "+tb.name+" mein hai.");return}
+  tb.items.push({n:v});save();$("name").value="";$("q").value="";render();
+  say("“"+v+"” "+tb.name+" mein jud gaya, number "+tb.items.length+".");window.scrollTo(0,document.body.scrollHeight);
+};
+$("q").oninput=function(){render();say(this.value.trim()?"Number original list ke hisaab se dikh rahe hain.":"")};
+function newTab(){
+  modal("Naya section banao",[{l:"Section ka naam (jaise OVA, Manga)",t:"text"}],"Banao",function(v){
+    var nm=v[0].trim();
+    if(!nm)return "Naam likho.";
+    if(nm.length>20)return "Naam 20 akshar se chhota rakho.";
+    if(data.tabs.some(function(x){return x.name.toLowerCase()===nm.toLowerCase()}))return "Is naam ka section pehle se hai.";
+    var id="t"+Date.now();data.tabs.push({id:id,name:nm,items:[]});data.active=id;save();say("Section “"+nm+"” ban gaya.");render();return null});
+}
+$("deltab").onclick=function(){
+  var tb=cur();
+  if(data.tabs.length<2){say("Kam se kam ek section rakhna zaroori hai.");return}
+  gate(function(){
+    var idx=data.tabs.indexOf(tb);data.tabs=data.tabs.filter(function(x){return x!==tb});data.active=data.tabs[Math.min(idx,data.tabs.length-1)].id;save();render();say("Section “"+tb.name+"” ("+tb.items.length+" entries) hata diya.",{fn:function(){data.tabs.splice(Math.min(idx,data.tabs.length),0,tb);data.active=tb.id;save();render();say("Section “"+tb.name+"” wapas aa gaya.")}})});
+};
+$("chpw").onclick=function(){
+  modal("Password badlo",[{l:"Purana password"},{l:"Naya password (4 se 64 akshar)"},{l:"Naya password dobara"}],"Badlo",function(v){
+    var e=check(v[0]);if(e)return e;
+    if(v[1].length<4||v[1].length>64)return "Password 4 se 64 akshar ke beech rakho.";
+    if(v[1]!==v[2])return "Dono naye password match nahi karte.";
+    setPw(v[1]);say("Password badal gaya.");return null});
+};
+render();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(renderTabs);
+window.addEventListener("resize",renderTabs);
+</script>
+</body>
+</html>
